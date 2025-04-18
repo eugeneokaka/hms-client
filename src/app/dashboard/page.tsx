@@ -31,8 +31,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   ArrowDownCircle,
   ArrowUpCircle,
-  DollarSign,
-  LineChart,
   PiggyBank,
   Wallet,
 } from "lucide-react";
@@ -74,7 +72,6 @@ export default function Dashboard() {
     description: "",
   });
 
-  // Fetch all data
   const fetchData = async () => {
     try {
       const [transactionsRes, financeRes, categoriesRes, expensiveRes] =
@@ -103,11 +100,10 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  // Handle new transaction
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/transaction", {
+      const res = await fetch("http://localhost:4000/finance/transaction ", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTransaction),
@@ -311,7 +307,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[400px]">
-                {topCategories.map((category, index) => (
+                {topCategories.map((category) => (
                   <div
                     key={category.category}
                     className="mb-4 grid grid-cols-2 items-center"
