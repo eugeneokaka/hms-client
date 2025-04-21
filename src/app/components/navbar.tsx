@@ -12,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { CircleUserRound } from "lucide-react";
 
 interface User {
   firstname: string;
@@ -38,6 +37,7 @@ export default function Navbar() {
           setUser(data.user);
         }
       } catch (error) {
+        console.error("Error fetching user:", error);
         setUser(null);
       }
     };

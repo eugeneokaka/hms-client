@@ -1,6 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-export default function MedicineCard({ medicine }: { medicine: any }) {
+type Medicine = {
+  name: string;
+  category: string;
+  manufacturer: string;
+  quantity: number;
+  price: number;
+  expiryDate: string | Date;
+  order?: {
+    supplier: string;
+    orderNumber: string | number;
+  };
+};
+export default function MedicineCard({ medicine }: { medicine: Medicine }) {
   return (
     <Card>
       <CardHeader>
