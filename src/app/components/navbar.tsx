@@ -26,9 +26,12 @@ export default function Navbar() {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const res = await fetch("http://localhost:4000/auth/status", {
-          credentials: "include",
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/status`,
+          {
+            credentials: "include",
+          }
+        );
 
         if (!res.ok) throw new Error("Not authenticated");
 
