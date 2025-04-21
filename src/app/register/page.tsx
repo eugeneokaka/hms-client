@@ -52,7 +52,7 @@ export default function RegisterPage() {
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const res = await fetch("http://localhost:4000/me", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/me`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error("Not authenticated");
@@ -79,8 +79,8 @@ export default function RegisterPage() {
     try {
       const endpoint =
         isAdmin && data.role !== "USER"
-          ? "http://localhost:4000/login/register/admin"
-          : "http://localhost:4000/login/register";
+          ? `${process.env.NEXT_PUBLIC_BASE_URL}/login/register/admin`
+          : `${process.env.NEXT_PUBLIC_BASE_URL}register`;
 
       const res = await fetch(endpoint, {
         method: "POST",

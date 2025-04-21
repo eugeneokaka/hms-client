@@ -44,14 +44,17 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:4000/login/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Allows cookies to be stored
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/login/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Allows cookies to be stored
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data: ApiResponse = await response.json();
 

@@ -16,7 +16,9 @@ export default function ExpiringBanner() {
   useEffect(() => {
     const fetchExpiring = async () => {
       try {
-        const res = await fetch("http://localhost:4000/med/expires");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/med/expires`
+        );
         const data = await res.json();
         setExpiringMedicines(data?.data || []);
       } catch (err) {

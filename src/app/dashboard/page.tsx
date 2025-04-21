@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+console.log(process.env.NEXT_PUBLIC_BASE_URL);
 import {
   Select,
   SelectContent,
@@ -76,10 +77,10 @@ export default function Dashboard() {
     try {
       const [transactionsRes, financeRes, categoriesRes, expensiveRes] =
         await Promise.all([
-          fetch("http://localhost:4000/finance/transactions"),
-          fetch("http://localhost:4000/finance/finance"),
-          fetch("http://localhost:4000/finance/most-category"),
-          fetch("http://localhost:4000/finance/most-expensive"),
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/finance/transactions`),
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/finance/finance`),
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/finance/most-category`),
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/finance/most-expensive`),
         ]);
 
       const transactions = await transactionsRes.json();
@@ -103,11 +104,14 @@ export default function Dashboard() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:4000/finance/transaction ", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTransaction),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/finance/transaction `,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newTransaction),
+        }
+      );
       if (res.ok) {
         fetchData();
         setNewTransaction({

@@ -13,7 +13,7 @@ function useAuthCheck() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:4000/check", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/check`, {
           credentials: "include",
         });
 
