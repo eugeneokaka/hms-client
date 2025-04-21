@@ -33,32 +33,32 @@ export default function MedicinesPage() {
   const [filterCategory, setFilterCategory] = useState("");
   const [filterDate, setFilterDate] = useState("");
 
-  const fetchMedicines = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (searchName) params.append("name", searchName);
-      if (filterCategory) params.append("category", filterCategory);
-      if (filterDate) params.append("startDate", filterDate);
-
-      const query = params.toString();
-      const endpoint =
-        query.length > 0
-          ? `http://localhost:4000/med/medicines/search?${query}`
-          : `http://localhost:4000/med/medicines`;
-
-      const res = await fetch(endpoint);
-      const data = await res.json();
-      setMedicines(data.data || data || []);
-    } catch (err) {
-      console.error("Error fetching medicines:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
+      const fetchMedicines = async () => {
+        setLoading(true);
+        try {
+          const params = new URLSearchParams();
+          if (searchName) params.append("name", searchName);
+          if (filterCategory) params.append("category", filterCategory);
+          if (filterDate) params.append("startDate", filterDate);
+
+          const query = params.toString();
+          const endpoint =
+            query.length > 0
+              ? `${process.env.NEXT_PUBLIC_BASE_URL}/med/medicines/search?${query}`
+              : `${process.env.NEXT_PUBLIC_BASE_URL}/med/medicines`;
+
+          const res = await fetch(endpoint);
+          const data = await res.json();
+          setMedicines(data.data || data || []);
+        } catch (err) {
+          console.error("Error fetching medicines:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
       fetchMedicines();
     }, 500);
 

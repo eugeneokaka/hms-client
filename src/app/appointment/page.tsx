@@ -56,7 +56,7 @@ export default function BookingForm() {
         body: JSON.stringify({ userId, date, time }),
       });
 
-      const data = await res.json();
+      // const data = await res.json();
       if (res.ok) {
         return alert("Booking successful!");
       }
@@ -70,6 +70,7 @@ export default function BookingForm() {
         alert("something went wrong");
       }
     } catch (error) {
+      console.error("Error booking appointment:", error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

@@ -38,7 +38,8 @@ export default function RegisterPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [checkingRole, setCheckingRole] = useState(true); // NEW: To prevent UI flicker
+  const [checkingRole, setCheckingRole] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -46,7 +47,7 @@ export default function RegisterPage() {
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { role: "USER" }, // Default for non-admins
+    defaultValues: { role: "USER" },
   });
 
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function RegisterPage() {
         console.error("Error fetching user role:", error);
         setValue("role", "USER");
       } finally {
-        setCheckingRole(false); // NEW: Ensures UI doesn't load before role check is done
+        setCheckingRole(false);
       }
     };
 
@@ -96,9 +97,13 @@ export default function RegisterPage() {
 
       toast.success("Registration successful!");
       router.push("/login");
-    } catch (error: any) {
-      console.error(error);
-      toast.error(error.message || "Something went wrong. Please try again.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error);
+        toast.error(error.message || "Something went wrong. Please try again.");
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -175,7 +180,6 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Show role selection only if user is an admin */}
             {isAdmin ? (
               <div className="space-y-2">
                 <Label htmlFor="role">Role</Label>
